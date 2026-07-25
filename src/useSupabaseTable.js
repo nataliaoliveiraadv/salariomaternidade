@@ -15,7 +15,10 @@ export function useSupabaseTable(table, toDb, fromDb, userId) {
       .select("*")
       .order("created_at", { ascending: true });
     if (err) {
-      setError(err.message);
+      // eslint-disable-next-line no-console
+      console.error(`Erro ao carregar "${table}":`, err);
+      setError(`Não foi possível carregar "${table}": ${err.message}`);
+      setItems((prev) => prev ?? []); // nunca deixa a tela presa em "carregando" para sempre
     } else {
       setItems(data.map(fromDb));
     }
