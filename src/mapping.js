@@ -6,8 +6,38 @@
 const num = (v) => (v === "" || v === null || v === undefined ? null : Number(v));
 const str = (v) => (v === "" || v === null || v === undefined ? null : v);
 
+export function clienteToDb(f) {
+  return {
+    nome: f.nome,
+    cpf: str(f.cpf),
+    telefone: str(f.telefone),
+    whatsapp: str(f.whatsapp),
+    email: str(f.email),
+    cidade: str(f.cidade),
+    estado: str(f.estado),
+    status: f.status,
+    observacoes: str(f.observacoes),
+  };
+}
+
+export function clienteFromDb(r) {
+  return {
+    id: r.id,
+    nome: r.nome || "",
+    cpf: r.cpf || "",
+    telefone: r.telefone || "",
+    whatsapp: r.whatsapp || "",
+    email: r.email || "",
+    cidade: r.cidade || "",
+    estado: r.estado || "",
+    status: r.status || "Lead",
+    observacoes: r.observacoes || "",
+  };
+}
+
 export function beneficioToDb(f) {
   return {
+    cliente_id: str(f.clienteId),
     situacao: f.situacao,
     status: f.status,
     tipo: f.tipo,
@@ -30,6 +60,7 @@ export function beneficioToDb(f) {
 export function beneficioFromDb(r) {
   return {
     id: r.id,
+    clienteId: r.cliente_id || "",
     situacao: r.situacao || "Em Análise",
     status: r.status || "-",
     tipo: r.tipo || "SM Urbano",
@@ -51,6 +82,7 @@ export function beneficioFromDb(r) {
 
 export function partoToDb(f) {
   return {
+    cliente_id: str(f.clienteId),
     nome: f.nome,
     contato: str(f.contato),
     tipo: f.tipo,
@@ -64,6 +96,7 @@ export function partoToDb(f) {
 export function partoFromDb(r) {
   return {
     id: r.id,
+    clienteId: r.cliente_id || "",
     nome: r.nome || "",
     contato: r.contato || "",
     tipo: r.tipo || "SM Urbano",
@@ -73,3 +106,4 @@ export function partoFromDb(r) {
     observacao: r.observacao || "",
   };
 }
+
